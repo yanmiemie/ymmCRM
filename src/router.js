@@ -5,8 +5,25 @@ Vue.use(Router);
 
 export default new Router({
   // mode: "history",
-  routes: [
-     
+  routes: [ 
+    // {
+    //   path: "/",
+    //   name: "asaskAdd5",
+    //   component: () => import("./components/asaskAdd5")
+    // },  
+    {
+      path: "/",
+      name: "tst_Dpy",
+      component: () => import("./components/tst_Dpy")
+    },
+    {
+      path: "/tst_Dpy",
+      name: "tst_Dpy",
+      component: () => import("./components/tst_Dpy")
+    },
+
+    
+    // - - - - - - 
     {
       path: "/asaskAdd5",
       name: "asaskAdd5",
@@ -17,11 +34,6 @@ export default new Router({
       name: "adPlayer",
       component: () => import("./components/asask5_AddPlayer")
     }, 
-    // {
-    //   path: "/",
-    //   name: "asaskAdd5",
-    //   component: () => import("./components/asaskAdd5")
-    // }, 
     {
       path: "/adPList",
       name: "asaak5_List",
@@ -31,11 +43,6 @@ export default new Router({
       path: "/asaak5_List",
       name: "asaak5_List",
       component: () => import("./components/asaak5_List")
-    },
-    {
-      path: "/tst_Dpy",
-      name: "tst_Dpy",
-      component: () => import("./components/tst_Dpy")
     },
     {
       path: "/tst_List",

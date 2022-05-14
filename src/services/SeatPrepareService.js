@@ -1,6 +1,6 @@
 import firebase from "../firebase";
 
-const db = firebase.ref("/sts");
+const db = firebase.ref("/csmDtas");
 
 class StDataService {
   getAll() {

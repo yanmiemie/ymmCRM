@@ -29,7 +29,7 @@
       <download-csv
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         :data   = "tutorials"
-        name    = "本日資料回報.csv"
+        name    = "資料回報.csv"
       >下載.CSV
       </download-csv>
 

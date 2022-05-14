@@ -1,13 +1,7 @@
 <template> 
     <div class=" flex justify-center  ">
     <div class="w-full ">
-            <div class="grid grid-cols-9 gap-1">
-              
-                <!-- <div class="col-span-3 ..."></div>
-                <div class="col-span-2 ..."></div>
-                <div class="col-span-1 ..."></div>
-                <div class="col-span-1 ..."></div>
-                <div class="col-span-2 ..."></div> -->
+            <div class="grid grid-cols-9 gap-1"> 
               
               <div class =" col-span-4">
                 <span class="pt-30 text-xl font-base " > {{msg}} 請 {{ tmplr.patient_ID }} - {{ tmplr.name }} ，完成 {{ tmplr.prePare }}</span>
@@ -72,11 +66,137 @@
           </v-tabs>  
 
       <v-tabs-items v-model="tab"> 
-        <v-tab-item key='k0' value='k0'>
-              <div class="flex justify-center items-stretch ">
+            <v-tab-item key='k0' value='k0'>
+              <!-- {{ Roadhere }}
+              ////
+              {{ road }}
+              ///-/ -->
+             
+              <div class="grid grid-cols-3 gap-1"> 
+                <div class="col-span-1  ">
+                  <v-autocomplete
+                    v-model="value" 
+                    :items="roadMdf"
+                    dense label="路名"
+                  ></v-autocomplete>
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="pI"  
+                    class=" text-xs  px-1" label="號碼" >
+                  </v-text-field>  
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="pI"   
+                    class=" text-xs  px-1" label="樓層" >
+                  </v-text-field>  
+                </div> 
+
+                <!-- // - - - - - - -->
+
+                <div class="col-span-1  ">
+                  <v-autocomplete
+                    v-model="value" 
+                    :items="pd_content_idx1"
+                    dense label="方案"
+                  ></v-autocomplete>
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-autocomplete
+                    v-model="value" 
+                    :items="pd_content_idx2"
+                    dense label="方案"
+                  ></v-autocomplete>
+                </div> 
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="pI"  
+                    class=" text-xs  px-1" label="時間" >
+                  </v-text-field>  
+                </div> 
+
+                <!-- // - - - - - - -->
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="pI"  
+                    class=" text-xs  px-1" label="姓名" >
+                  </v-text-field>  
+                </div> 
+
+                <div class="col-span-1  ">
+                  <v-autocomplete
+                    v-model="value" 
+                    :items="pd_content"
+                    dense label="結帳週期"
+                  ></v-autocomplete>
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="pI"  
+                    class=" text-xs  px-1" label="習慣結帳方式" >
+                  </v-text-field>  
+                </div> 
+
+                <!-- // - - - - - - -->
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="pI"  
+                    class=" text-xs  px-1" label="最近結帳紀錄" >
+                  </v-text-field>  
+                </div>  
+
+                <div class="col-span-2  ">
+                  <v-text-field 
+                    dense v-model="pI" 
+                    class=" text-xs  px-1" label="備註" >
+                  </v-text-field>  
+                </div>
+
                 
-                <div class="m-3 ">
-                  
+
+              </div>
+
+              
+             
+<!-- {{ roadMdf }} -->
+              <!-- <v-autocomplete
+                v-model="value"
+                 
+                :items="roadMdf"
+                dense
+                filled
+                label="Filled"
+              ></v-autocomplete>
+
+               <ul class="bd-red-300">
+              <li v-for="idx in road" :key="idx.路名">
+                {{idx.路名}}
+              </li>
+            </ul>
+
+               {{ road }} -->
+ 
+
+              
+              
+              <v-btn @click="saveCMS" > 提交 </v-btn> 
+ 
+       
+                     
+                      
+
+            </v-tab-item>
+        <v-tab-item key='k01' value='k01'>
+              <div class="flex justify-center items-stretch "> 
+                  <div class="m-3 "> 
                   <v-dialog
                     v-model="dialog2"
                     persistent
@@ -415,7 +535,7 @@
           <v-btn class="w-full" depressed color="error" @click="savePtst(1)" >  完成 </v-btn>
         </v-tab-item> 
 
-         <v-tab-item key='k2' value='k2' > 
+         <v-tab-item key='k2' value='k2' >  
             <!--  這邊是測試可以存取的一個過程，希望可以再往下執行 -->
              題本2
               <v-btn
@@ -439,21 +559,7 @@
  
         </v-tab-item>
       </v-tabs-items>
-    </div> 
-
-        <!-- <div class="w-2/3 ml-10">
-          <div v-if="currentTutorial">
-            <tutorial-details
-              :tutorial="currentTutorial"
-              @refreshList="refreshList"
-            />
-          </div>
-          <div v-else>
-            <br />
-            <p>Please 確認 on a Tutorial...</p>
-          </div>
-        </div> -->
-    <hr> 
+    </div>  
   </div>
 </template>
  
@@ -468,6 +574,11 @@ import Cookies from 'js-cookie'
 
 import PlayerService from "../services/playerService";
 
+// import Road from '../data/Roadapi';
+import usersData from "../data/users.json";
+import Rdapi from "../data/Roadapi.json";
+
+
 export default {
   name: "tutorials-list",
   components: { TutorialDetails },
@@ -475,6 +586,17 @@ export default {
 
   data() {
     return { 
+      value:'',
+      value2:'',
+      road:Rdapi,
+      roadMdf:[],
+      pd_content_idx1:['原味1','原味2','綜合輪送（含原味）','調味輪送'],
+      pd_content_idx2:['見紅就休','每天送','配合幼稚園','到外縣市上班','血緣親戚','親友團'],
+      pd_content_idx3:['原味','甜味','紅糖','巧克力','草莓','果汁','綜合輪送'],
+
+
+      users: usersData,
+      // Roadhere: Road,
       msg:"",
       dialog: false,
       dialog2: false,
@@ -606,16 +728,11 @@ chkrds(){
     },
 
     savePdta() {
-
-      //  this.cntDat_qu1();
-      // this.qufd[0]=(6-this.radios[1]-this.radios[2]);
-
+ 
       this.qufd[0]=((((((6-this.radios[3])+(6-this.radios[4])+this.radios[10]+this.radios[15]+this.radios[16]+this.radios[17]+this.radios[18])/7)*4)-4)*(100/16)); 
       this.qufd[1]= ((((this.radios[5] + this.radios[6] +this.radios[7]+this.radios[11]+this.radios[19]+(6-+this.radios[26]))/6)*4)-4)*(100/16);
       this.qufd[2]=(((((this.radios[20] + this.radios[21] +this.radios[22]+this.radios[27])/4)*4)-4)*(100/16));           
-  //     this.qufd[3]=( (((this.radios[8] + this.radios[9] +this.radios[12] +this.radios[13] +this.radios[14] +this.radios[23] +this.radios[24] +this.radios[25] +this.radios[28]  )/9)*4)-4)*(100/16);
-           
-
+  
       var data = {
        
 
@@ -634,20 +751,31 @@ chkrds(){
           console.log(e);
         }); 
     },
+
+    saveCMS() {
+ 
+      
+      var data = { 
+
+        name        : this.pI,
+        // patient_ID  : this.tmplr.patient_ID,
+        // prePare     : this.tmplr.prePare, 
+        // quiz_1_fdbk : this.qufd,  
+      };
+
+      SeatDataService.create(data)
+        .then(() => {
+          this.msg= "name，登記成功";
+          this.submitted = true;
+        })
+        .catch(e => {
+          console.log(e);
+        }); 
+    },
     
     cntDat_qu1(){
 
-        // this.qufd[0]=((((((6-this.radios[3])+(6-this.radios[4])+this.radios[10]+this.radios[15]+this.radios[16]+this.radios[17]+this.radios[18])/7)*4)-4)*(100/16)) ;
-
-            // <br/>
-            // PSYCH : {{ ((((radios[5] + radios[6] +radios[7]+radios[11]+radios[19]+(6-+radios[26]))/6)*4)-4)*(100/16) }}
-
-            // <br/>
-            // SOCIAL : {{ (((((radios[20] + radios[21] +radios[22]+radios[27])/4)*4)-4)*(100/16)) }}
-           
-            // <br/>
-            // ENVIR : {{ ( (((radios[8] + radios[9] +radios[12] +radios[13] +radios[14] +radios[23] +radios[24] +radios[25] +radios[28]  )/9)*4)-4)*(100/16) }}
-               
+         
     },
 
     saveFirstLogin(){
@@ -702,6 +830,16 @@ chkrds(){
       this.tutorials = _tutorials; 
     },
 
+    mdf() {
+       
+      for( var n=0 ; n <= this.road.length-1 ; n++)
+      {
+        this.roadMdf.push( this.road[n].路名  )
+      }
+
+      // this.roadMdf = _tutorials; 
+    },
+
     refreshList() {
       this.currentTutorial = null;
       this.currentIndex = -1;
@@ -737,6 +875,7 @@ chkrds(){
     // console.log(_tutorials.title);  
 
      SeatDataService.getAll().on("value", this.onDataChange);  
+     this.mdf();
   },
   beforeDestroy() {
      SeatDataService.getAll().off("value", this.onDataChange);

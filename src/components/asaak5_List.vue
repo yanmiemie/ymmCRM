@@ -233,6 +233,39 @@
                           </v-radio-group> -->
         </v-tab-item>
 
+        <v-tab-item key='k2' value='k2'>
+          <v-data-table
+             dense
+            :headers="hds_Leeeft"
+            :items="roadjson"
+            item-key="name" 
+            :search="search" 
+            :items-per-page="30"
+            >
+            <template v-slot:top>
+                <v-text-field
+                v-model="search"
+                label="搜尋路名"
+                class="mx-4"
+                ></v-text-field>
+            </template>
+            <template v-slot:body.append>
+                <tr>
+                <td></td>
+                <td>
+                    <v-text-field
+                    v-model="calories"
+                    type="number"
+                    label="Less than"
+                    ></v-text-field>
+                </td>
+                <td colspan="4"></td>
+                </tr>
+            </template>
+            </v-data-table>
+
+        </v-tab-item>
+
 
       </v-tabs-items> 
     </div> 
@@ -249,6 +282,7 @@ import TutorialDetails from "./asask5_Mdf";
  
 import SeatDataService from "../services/SeatPrepareService";
 
+import Rdj from "../data/Roadapi.json";
 export default {
   name: "tutorials-list",
   components: { TutorialDetails },
@@ -275,8 +309,18 @@ export default {
       show: false,
       tutorials: [],
       currentTutorial: null,
-      currentIndex: -1
-    };
+      currentIndex: -1,
+
+      // - - - - - - - - - - - - - - - - - - -
+
+       // - - - - - - - - - - - - - -
+      // hds_Leeeft: [ 
+      //   { text: '縣市名稱', value: '縣市名稱' },
+      //   { text: '行政區域名稱', value: '行政區域名稱' }, 
+      //   { text: '路名', value: '路名' },
+      // ], 
+      // roadjson:Rdj,
+    }
   }, 
   methods: { 
     onDataChange(items) {

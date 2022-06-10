@@ -11,15 +11,30 @@ export default new Router({
     //   name: "asaskAdd5",
     //   component: () => import("./components/asaskAdd5")
     // },  
-    {
-      path: "/",
-      name: "tst_Dpy",
-      component: () => import("./components/tst_Dpy")
-    },
+    // {
+    //   path: "/",
+    //   name: "tst_Dpy",
+    //   component: () => import("./components/tst_Dpy")
+    // },
     {
       path: "/tst_Dpy",
       name: "tst_Dpy",
       component: () => import("./components/tst_Dpy")
+    },
+    {
+      path: "/",
+      name: "pd_Dpy",
+      component: () => import("./components/pd_Dpy3")
+    },
+    {
+      path: "/pd_Dpy",
+      name: "pd_Dpy",
+      component: () => import("./components/pd_Dpy")
+    },
+    {
+      path: "/pd_Dpy3",
+      name: "pd_Dpy",
+      component: () => import("./components/pd_Dpy3")
     },
 
     

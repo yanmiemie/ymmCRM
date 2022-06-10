@@ -4,11 +4,11 @@
             <div class="grid grid-cols-9 gap-1"> 
               
               <div class =" col-span-4">
-                <span class="pt-30 text-xl font-base " > {{msg}} 請 {{ tmplr.patient_ID }} - {{ tmplr.name }} ，完成 {{ tmplr.prePare }}</span>
+                <span class="pt-30 text-xs font-base my-3 " > {{msg}} 請 {{ tmplr.patient_ID }} - {{ tmplr.name }} ，完成 {{ tmplr.prePare }}</span>
 
               </div>
                <div class ="col-span-5">
-                 <v-btn
+                 <!-- <v-btn
                     class="mx-3 my-1"
                     color="primary" 
                     solo
@@ -33,7 +33,7 @@
                     @click="Te(3)"
                   >
                     載入 測試數據 3
-                  </v-btn>
+                  </v-btn> -->
                 
               </div>
               
@@ -43,39 +43,298 @@
               
            <v-tabs
             v-model="tab"
-            background-color="primary" 
+            background-color="#EEEFF3" 
             fixed-tabs 
-           >  
+           >   
 
             <v-tab key='k0' href='#k0' v-if="!hide"  >    
-              登入作業
+              登記
             </v-tab>
 
-            <v-tab key='k1' href='#k1' v-if="!hide"  >    
-              題本_1
+            <v-tab key='k9' href='#k9' v-if="!hide"  >    
+              列表模組
+            </v-tab>
+            
+            <v-tab key='k7' href='#k7' v-if="!hide"  >    
+              今.明日 訂單狀況
+            </v-tab>
+
+            <v-tab key='k8' href='#k8' v-if="!hide"  >    
+              修改模組
             </v-tab> 
 
-            <v-tab key='k2' href='#k2' v-if="!hide"  >    
+            <!-- <v-tab key='k2' href='#k2' v-if="!hide"  >    
               題本_2
             </v-tab>  
 
             <v-tab key='k3' href='#k3' v-if="!hide"  >    
               題本_3
-            </v-tab> 
+            </v-tab>  -->
 
           </v-tabs>  
 
-      <v-tabs-items v-model="tab"> 
-            <v-tab-item key='k0' value='k0'>
-              <!-- {{ Roadhere }}
-              ////
-              {{ road }}
-              ///-/ -->
-             
-              <div class="grid grid-cols-3 gap-1"> 
+      <v-tabs-items v-model="tab">   
+        <v-tab-item key='k0' value='k0'>  
+          <div class="grid grid-cols-6 gap-1 mt-10">   
+            <div class="col-span-6  ">
+              <span class="pt-30 text-xs font-base my-3" > 
+                {{ msg }}
+              </span> 
+            </div>
+
+            <div class="col-span-6  ">
+              <span class="pt-30 text-xs font-base my-3" > 
+                配送地點
+              </span> 
+            </div>
+
+            <div class="col-span-1  ">
+              <v-autocomplete
+                v-model="mbr.ads.regen" 
+                :items="regen_idx"
+                dense label="地區"
+              ></v-autocomplete>
+            </div> 
+
+            <div class="col-span-1  ">
+              <v-autocomplete
+                v-model="mbr.ads.road" 
+                :items="roadMdf"
+                dense label="路名"
+              ></v-autocomplete>
+            </div>
+
+            <div class="col-span-1  ">
+              <v-text-field 
+                dense v-model="mbr.ads.meta"   
+                class=" text-xs  px-1" label="鄰里巷弄" >
+              </v-text-field>  
+            </div>
+
+
+            <div class="col-span-1  ">
+              <v-text-field 
+                type="number" 
+                dense v-model="mbr.ads.no"  
+                class=" text-xs  px-1" label="號碼" >
+              </v-text-field>  
+            </div>
+
+            <div class="col-span-1  ">
+              <v-text-field 
+                dense v-model="mbr.ads.floor"   
+                class=" text-xs  px-1" label="樓層/戶號" >
+              </v-text-field>  
+            </div> 
+
+            <div class="col-span-1  ">
+              <v-text-field 
+                dense v-model="mbr.ads.cmty"   
+                class=" text-xs  px-1" label="社區名稱" >
+              </v-text-field>  
+            </div> 
+
+            
+            <!-- // - - - - - - -->
+
+            <div class="col-span-6  ">
+              <span class="pt-30 text-xs font-base my-3 " > 
+                顧客.基本資料
+              </span> 
+            </div>
+
+            <div class="col-span-1  ">
+              <v-text-field 
+                dense v-model="mbr.name"  
+                class=" text-xs  px-1" label="姓名" >
+              </v-text-field>  
+            </div> 
+
+            <div class="col-span-1  ">
+              <v-text-field 
+                dense v-model="mbr.phone"   
+                class=" text-xs  px-1" label="手機號碼" >
+              </v-text-field>  
+            </div>
+
+            <div class="col-span-1  ">
+              <v-autocomplete
+                dense v-model="mbr.cmtpipe_1"  :items="cmtpipe"
+                class=" text-xs  px-1" label="溝通管道1" >
+              </v-autocomplete>  
+            </div>
+
+            <div class="col-span-1  ">
+              <v-text-field 
+                dense v-model="mbr.cmtpipe_2"   
+                class=" text-xs  px-1" label="溝通管道2" >
+              </v-text-field>  
+            </div>
+
+            <div class="col-span-1  ">
+              <v-text-field 
+                outlined dense v-model="mbr.sno"   
+                class=" text-xs  px-1" label="顧客編號" >
+              </v-text-field>  
+            </div>
+
+            <div class="col-span-1  ">
+              <v-btn @click="saveCMS" > 提交 </v-btn>   
+            </div> 
+
+            <div class="col-span-6  ">
+              <span class="pt-30 text-xs font-base my-3 " > 
+                配送方案
+              </span> 
+            </div>
+
+            <div class="col-span-1  ">
+              <v-autocomplete
+                v-model="mbr.bking.mor"  
+                :items="pd_content_idx1"
+                dense label="方案選擇1"
+              ></v-autocomplete>
+            </div> 
+
+            <div class="col-span-1  ">
+              <v-autocomplete
+                v-model="mbr.bking.fmy"  
+                :items="pd_content_idx2"
+                dense label="顧客分類"
+              ></v-autocomplete>
+            </div>  
+
+            
+
+            <div class="col-span-1  ">
+              <v-text-field 
+                dense v-model="mbr.bking.timeNeed"  
+                class=" text-xs  px-1" label="配達.時間需求" >
+              </v-text-field>  
+            </div> 
+
+            
+            <div class="col-span-6  ">
+              <span class="pt-30 text-xs font-base my-3 " > 
+                結帳習慣
+              </span> 
+            </div>
+            
+
+            <div class="col-span-1  ">
+              <v-autocomplete
+                v-model="mbr.pmt.fquc"  
+                :items="pd_content"
+                dense label="結帳週期"
+              ></v-autocomplete>
+            </div>
+
+            <div class="col-span-1  ">
+              <v-text-field 
+                dense v-model="mbr.pmt.type"  
+                class=" text-xs  px-1" label="習慣結帳方式" >
+              </v-text-field>  
+            </div> 
+
+            <!-- // - - - - - - -->
+
+            <div class="col-span-1  ">
+              <v-text-field 
+                dense v-model="mbr.pmt.note"  
+                class=" text-xs  px-1" label="最近結帳紀錄" >
+              </v-text-field>  
+            </div>  
+
+            <div class="col-span-2  ">
+              <v-text-field 
+                dense v-model="mbr.memo"   
+                class=" text-xs  px-1" label="備註" >
+              </v-text-field>  
+            </div> 
+          </div>
+
+          
+        </v-tab-item>
+        
+        <v-tab-item key='k9' value='k9'>  
+            <v-data-table
+            dense
+            :headers="hds_Leeeft"
+            :items="CMS"
+            item-key="name" 
+            :search="search" 
+            :items-per-page="30"
+            >
+            ..
+
+            <template v-slot:top>
+                <v-text-field
+                v-model="search"
+                label="搜尋...路名"
+                class="mx-4"
+                ></v-text-field>
+            </template>
+
+            <template v-slot:item.actions="{ item }">
+              <v-icon
+                small
+                class="mr-2"
+                @click="editItem(item)"
+              >
+                mdi-pencil
+              </v-icon>
+              <v-icon
+                small
+                @click="deleteItem(item)"
+              >
+                mdi-delete
+              </v-icon>
+            </template>
+
+            <!-- <template v-slot:body.append>
+                <tr>
+                <td></td>
+                <td>
+                    <v-text-field
+                    v-model="calories"
+                    type="number"
+                    label="Less than"
+                    ></v-text-field>
+                </td>
+                <td colspan="4"></td>
+                </tr>
+            </template> -->
+
+            </v-data-table>  
+        </v-tab-item> 
+
+        
+        <v-tab-item key='k8' value='k8'> 
+          <div class="grid grid-cols-6 gap-1 mt-10"> 
+            <div class="col-span-5">
+
+              <div class="col-span-5 grid grid-cols-6">  
+                      {{ msg }} 
+              </div> 
+
+              <div class="col-span-6 my-10 grid grid-cols-6 gap-1">
+                <div class="col-span-6  ">
+                  <span class="pt-30 text-xs font-base my-3" > 
+                    配送地點
+                  </span> 
+                </div>
+
                 <div class="col-span-1  ">
                   <v-autocomplete
-                    v-model="value" 
+                    v-model="currentTutorial.regen" 
+                    :items="regen_idx"
+                    dense label="地區"
+                  ></v-autocomplete>
+                </div> 
+
+                <div class="col-span-1  ">
+                  <v-autocomplete
+                    v-model="currentTutorial.road" 
                     :items="roadMdf"
                     dense label="路名"
                   ></v-autocomplete>
@@ -83,51 +342,118 @@
 
                 <div class="col-span-1  ">
                   <v-text-field 
-                    dense v-model="pI"  
+                    dense v-model="currentTutorial.meta"   
+                    class=" text-xs  px-1" label="鄰里巷弄" >
+                  </v-text-field>  
+                </div> 
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    type="number" 
+                    dense v-model="currentTutorial.no"  
                     class=" text-xs  px-1" label="號碼" >
                   </v-text-field>  
                 </div>
 
                 <div class="col-span-1  ">
                   <v-text-field 
-                    dense v-model="pI"   
-                    class=" text-xs  px-1" label="樓層" >
+                    dense v-model="currentTutorial.floor"   
+                    class=" text-xs  px-1" label="樓層/戶號" >
                   </v-text-field>  
                 </div> 
 
-                <!-- // - - - - - - -->
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="currentTutorial.cmty"   
+                    class=" text-xs  px-1" label="社區名稱" >
+                  </v-text-field>  
+                </div>  
+
+                <div class="col-span-6  ">
+                  <span class="pt-30 text-xs font-base my-3 " > 
+                    顧客.基本資料
+                  </span> 
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="currentTutorial.name"  
+                    class=" text-xs  px-1" label="姓名" >
+                  </v-text-field>  
+                </div> 
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="currentTutorial.phone"   
+                    class=" text-xs  px-1" label="手機號碼" >
+                  </v-text-field>  
+                </div>
 
                 <div class="col-span-1  ">
                   <v-autocomplete
-                    v-model="value" 
-                    :items="pd_content_idx1"
-                    dense label="方案"
-                  ></v-autocomplete>
+                    dense v-model="currentTutorial.cmtpipe_1"  :items="cmtpipe"
+                    class=" text-xs  px-1" label="溝通管道1" >
+                  </v-autocomplete>  
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="currentTutorial.cmtpipe_2"   
+                    class=" text-xs  px-1" label="溝通管道2" >
+                  </v-text-field>  
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    outlined dense v-model="currentTutorial.sno"   
+                    class=" text-xs  px-1" label="顧客編號" >
+                  </v-text-field>  
+                </div>
+
+                  <div class="col-span-1  ">
+                  <v-btn @click="updateCMS" > 更新資料 </v-btn>
+                  <v-btn @click="deleteCMS" > 刪除 </v-btn>
+                  
+                </div>
+
+                  
+
+                <div class="col-span-6  ">
+                  <span class="pt-30 text-xs font-base my-3 " > 
+                    配送方案
+                  </span> 
                 </div>
 
                 <div class="col-span-1  ">
                   <v-autocomplete
                     v-model="value" 
-                    :items="pd_content_idx2"
-                    dense label="方案"
+                    :items="pd_content_idx1"
+                    dense label="方案選擇1"
                   ></v-autocomplete>
                 </div> 
 
                 <div class="col-span-1  ">
-                  <v-text-field 
-                    dense v-model="pI"  
-                    class=" text-xs  px-1" label="時間" >
-                  </v-text-field>  
-                </div> 
-
-                <!-- // - - - - - - -->
+                  <v-autocomplete
+                    v-model="value" 
+                    :items="pd_content_idx2"
+                    dense label="顧客分類"
+                  ></v-autocomplete>
+                </div>  
 
                 <div class="col-span-1  ">
                   <v-text-field 
                     dense v-model="pI"  
-                    class=" text-xs  px-1" label="姓名" >
+                    class=" text-xs  px-1" label="配達.時間需求" >
                   </v-text-field>  
                 </div> 
+
+                
+                <div class="col-span-6  ">
+                  <span class="pt-30 text-xs font-base my-3 " > 
+                    結帳習慣
+                  </span> 
+                </div>
+                
 
                 <div class="col-span-1  ">
                   <v-autocomplete
@@ -144,7 +470,205 @@
                   </v-text-field>  
                 </div> 
 
-                <!-- // - - - - - - -->
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="pI"  
+                    class=" text-xs  px-1" label="最近結帳紀錄" >
+                  </v-text-field>  
+                </div>  
+
+                <div class="col-span-2  ">
+                  <v-text-field 
+                    dense v-model="pI" 
+                    class=" text-xs  px-1" label="備註" >
+                  </v-text-field>  
+                </div>
+
+              </div> 
+
+            </div>
+
+            <div class="col-span-1 my-10 ">
+              <v-list-item-group 
+                color="primary" 
+                > 
+                <v-list-item
+                  v-for="(tutorial, index) in tutorials"  
+                  :key="index"  
+                  @click="setActiveTutorial(tutorial, index)"
+                  
+                > 
+                <v-chip class="text-white text-xs mr-5" color="green"  >
+                  {{ tutorial.name }} _ {{ tutorial.sno }} 
+                </v-chip> 
+                <span class="text-xs text-green-700 font-semibold tracking-wide">{{ tutorial.question }}</span>
+    
+                </v-list-item>
+              </v-list-item-group>  
+            </div>  
+          </div>    
+        </v-tab-item>
+
+        <v-tab-item key='k7' value='k7'> 
+          <div class="grid grid-cols-6 gap-1 mt-10"> 
+            <div class="col-span-5">
+
+              <div class="col-span-5 grid grid-cols-6">  
+                      {{ msg }} 
+              </div> 
+
+              <div class="col-span-6 my-10 grid grid-cols-6 gap-1">
+                <div class="col-span-6  ">
+                  <span class="pt-30 text-xs font-base my-3" > 
+                    配送地點
+                  </span> 
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-autocomplete
+                    v-model="currentTutorial.regen" 
+                    :items="regen_idx"
+                    dense label="地區"
+                  ></v-autocomplete>
+                </div> 
+
+                <div class="col-span-1  ">
+                  <v-autocomplete
+                    v-model="currentTutorial.road" 
+                    :items="roadMdf"
+                    dense label="路名"
+                  ></v-autocomplete>
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="currentTutorial.meta"   
+                    class=" text-xs  px-1" label="鄰里巷弄" >
+                  </v-text-field>  
+                </div> 
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    type="number" 
+                    dense v-model="currentTutorial.no"  
+                    class=" text-xs  px-1" label="號碼" >
+                  </v-text-field>  
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="currentTutorial.floor"   
+                    class=" text-xs  px-1" label="樓層/戶號" >
+                  </v-text-field>  
+                </div> 
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="currentTutorial.cmty"   
+                    class=" text-xs  px-1" label="社區名稱" >
+                  </v-text-field>  
+                </div>  
+
+                <div class="col-span-6  ">
+                  <span class="pt-30 text-xs font-base my-3 " > 
+                    顧客.基本資料
+                  </span> 
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="currentTutorial.name"  
+                    class=" text-xs  px-1" label="姓名" >
+                  </v-text-field>  
+                </div> 
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="currentTutorial.phone"   
+                    class=" text-xs  px-1" label="手機號碼" >
+                  </v-text-field>  
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-autocomplete
+                    dense v-model="currentTutorial.cmtpipe_1"  :items="cmtpipe"
+                    class=" text-xs  px-1" label="溝通管道1" >
+                  </v-autocomplete>  
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="currentTutorial.cmtpipe_2"   
+                    class=" text-xs  px-1" label="溝通管道2" >
+                  </v-text-field>  
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    outlined dense v-model="currentTutorial.sno"   
+                    class=" text-xs  px-1" label="顧客編號" >
+                  </v-text-field>  
+                </div>
+
+                  <div class="col-span-1  ">
+                  <v-btn @click="updateCMS" > 更新資料 </v-btn>
+                  <v-btn @click="deleteCMS" > 刪除 </v-btn>
+                  
+                </div>
+
+                  
+
+                <div class="col-span-6  ">
+                  <span class="pt-30 text-xs font-base my-3 " > 
+                    配送方案
+                  </span> 
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-autocomplete
+                    v-model="value" 
+                    :items="pd_content_idx1"
+                    dense label="方案選擇1"
+                  ></v-autocomplete>
+                </div> 
+
+                <div class="col-span-1  ">
+                  <v-autocomplete
+                    v-model="value" 
+                    :items="currentTutorial.type"
+                    dense label="顧客分類"
+                  ></v-autocomplete>
+                </div>  
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="currentTutorial.timeNeed"  
+                    class=" text-xs  px-1" label="配達.時間需求" >
+                  </v-text-field>  
+                </div> 
+
+                
+                <div class="col-span-6  ">
+                  <span class="pt-30 text-xs font-base my-3 " > 
+                    結帳習慣
+                  </span> 
+                </div>
+                
+
+                <div class="col-span-1  ">
+                  <v-autocomplete
+                    v-model="value" 
+                    :items="currentTutorial.fquc"
+                    dense label="結帳週期"
+                  ></v-autocomplete>
+                </div>
+
+                <div class="col-span-1  ">
+                  <v-text-field 
+                    dense v-model="pI"  
+                    class=" text-xs  px-1" label="習慣結帳方式" >
+                  </v-text-field>  
+                </div> 
 
                 <div class="col-span-1  ">
                   <v-text-field 
@@ -160,40 +684,181 @@
                   </v-text-field>  
                 </div>
 
-                
+                <div class="col-span-6  ">
+                  <hr>
+                </div>
 
-              </div>
+                <div class="col-span-6  ">
+                  <span class="pt-30 text-lg font-black my-3 " > 
+                    選擇訂單內容
+                  </span> 
+                </div>
 
-              
-             
-<!-- {{ roadMdf }} -->
-              <!-- <v-autocomplete
-                v-model="value"
-                 
-                :items="roadMdf"
-                dense
-                filled
-                label="Filled"
-              ></v-autocomplete>
+                  
+                <div class="col-span-6 grid grid-cols-12 gap-1 ">
+                  <div class="col-span-12 grid grid-cols-6 gap-1">
+                    
+                    <div class="col-span-1  ">
+                      <span class="pt-30 text-xs font-base my-3" > 
+                        配送地點
+                      </span> 
+                    </div>
+                    <div class="col-span-1  ">
+                      <v-text-field 
+                        type="number"
+                        dense v-model="bking_Amt" 
+                        class=" text-xs  px-1" label="數量" >
+                      </v-text-field>   
 
-               <ul class="bd-red-300">
-              <li v-for="idx in road" :key="idx.路名">
-                {{idx.路名}}
-              </li>
-            </ul>
 
-               {{ road }} -->
- 
+                    </div>
+                    <div class="col-span-1  "> 
+                      <v-btn-toggle
+                        v-model="toggle_multiple"
+                        color="primary"
+                        dense
+                        group
+                        multiple
+                      >
+                        <v-btn
+                          :value="1"
+                          text
+                        >
+                          <v-icon>mdi-format-bold</v-icon>
+                        </v-btn>
 
-              
-              
-              <v-btn @click="saveCMS" > 提交 </v-btn> 
- 
-       
-                     
-                      
+                        <v-btn
+                          :value="2"
+                          text
+                        >
+                          <v-icon>mdi-format-italic</v-icon>
+                        </v-btn>
 
-            </v-tab-item>
+                        <v-btn
+                          :value="3"
+                          text
+                        >
+                          <v-icon>mdi-format-underline</v-icon>
+                        </v-btn>
+
+                        <v-btn
+                          :value="4"
+                          text
+                        >
+                          <v-icon>mdi-format-color-fill</v-icon>
+                        </v-btn>
+                      </v-btn-toggle>
+                    </div>  
+                  </div>
+                  <div class="col-span-10"></div>
+                  <div class="col-span-12">
+                    <div  v-for="(item, n) in parseInt(this.bking_Amt)" 
+                          :key="n"
+                          class="grid grid-cols-12 gap-0.5 " > 
+                          <div class="col-span-2">
+                              <v-autocomplete
+                                v-model="value" 
+                                :items="pd_content"
+                                dense label="選擇方案"
+                              ></v-autocomplete> 
+                          </div> 
+                          <div class="col-span-2  ">
+                            <v-text-field 
+                              dense v-model="pd_id" 
+                              class=" text-xs  px-1" label="id" >
+                            </v-text-field>  
+                          </div>  
+                          <div class="col-span-2">
+                              <v-text-field 
+                              dense v-model="pd_amt" 
+                              class=" text-xs  px-1" label="數量" >
+                              </v-text-field> 
+                              <!-- <v-autocomplete
+                                v-model="value" 
+                                :items="pd_content"
+                                dense label="時間"
+                              ></v-autocomplete>  -->
+                          </div> 
+                          <div class="col-span-1">
+                              <v-autocomplete
+                                v-model="value" 
+                                :items="pd_content"
+                                dense label="購買群組"
+                              ></v-autocomplete> 
+                              
+                          </div> 
+                          <div class="col-span-1">
+                              <v-autocomplete
+                                v-model="value" 
+                                :items="pd_content"
+                                dense label="原本價格"
+                              ></v-autocomplete> 
+                          </div> 
+                          <div class="col-span-1">
+                              <v-autocomplete
+                                v-model="value" 
+                                :items="pd_content"
+                                dense label="優惠條件"
+                              ></v-autocomplete> 
+                          </div> 
+                          <div class="col-span-1">
+                            <v-text-field 
+                              dense v-model="income" 
+                              class=" text-xs  px-1" label="成交價.." >
+                              </v-text-field> 
+                              <!-- <v-autocomplete
+                                v-model="income" 
+                                :items="pd_content"
+                                dense label="成交價.."
+                              ></v-autocomplete>  -->
+                          </div> 
+                          <div class="col-span-1  ">
+                            <v-text-field 
+                              dense v-model="pI" 
+                              class=" text-xs  px-1" label="付費狀況" >
+                            </v-text-field>   
+                          </div>
+
+                          <div class="col-span-1  "> 
+                            <v-btn 
+                              @click="saveODer"
+                              
+                            >提交囉</v-btn> 
+                          </div>
+                    </div> 
+                  </div>
+
+                  
+                  
+                </div>
+
+              </div> 
+
+            </div>
+
+            <div class="col-span-1 my-10 ">
+              <v-list-item-group 
+                color="primary" 
+                > 
+                <v-list-item
+                  v-for="(tutorial, index) in tutorials"  
+                  :key="index"  
+                  @click="setActiveTutorial(tutorial, index)"
+                  
+                > 
+                <v-chip class="text-white text-xs mr-5" color="green"  >
+                  {{ tutorial.name }} _ {{ tutorial.sno }} 
+                </v-chip> 
+                <span class="text-xs text-green-700 font-semibold tracking-wide">{{ tutorial.question }}</span>
+    
+                </v-list-item>
+              </v-list-item-group>  
+            </div>  
+          </div>    
+        </v-tab-item>
+
+
+
         <v-tab-item key='k01' value='k01'>
               <div class="flex justify-center items-stretch "> 
                   <div class="m-3 "> 
@@ -566,7 +1231,12 @@
 
 <script>
 
-import TutorialDetails from "./asask5_Mdf";
+import TutorialDetails from "./tst_Dpy_Mdf";
+
+import odDataService from "../services/odDataService"
+import pdDataService from "../services/pdDataService"
+
+// src/components/tst_Dpy_Mdf.vue
  
 import SeatDataService from "../services/SeatPrepareService";
 import Cookies from 'js-cookie'
@@ -590,11 +1260,19 @@ export default {
       value2:'',
       road:Rdapi,
       roadMdf:[],
-      pd_content_idx1:['原味1','原味2','綜合輪送（含原味）','調味輪送'],
-      pd_content_idx2:['見紅就休','每天送','配合幼稚園','到外縣市上班','血緣親戚','親友團'],
+      pd_content_idx1:['家庭號配送','快閃店配送','晨間配送','原味1','原味2','綜合輪送（含原味）','調味輪送'],
+      pd_content_idx2:['見紅就休','每天送','配合幼稚園','到外縣市上班','血緣親戚','親友團','家庭號-老顧客','家庭號-新顧客'],
       pd_content_idx3:['原味','甜味','紅糖','巧克力','草莓','果汁','綜合輪送'],
 
+      // - - - - - - - - - - - - - - - - - - - -
+      CMS:[],
+      hds_Leeeft: [ 
+        { text: '縣市名稱', value: 'name' },
+        { text: '行政區域名稱', value: 'key' }, 
+        // { text: '路名', value: '路名' },
+      ], 
 
+      // - - - - - - - - - - - - - - - - - - - - 
       users: usersData,
       // Roadhere: Road,
       msg:"",
@@ -605,7 +1283,7 @@ export default {
 
       menu2:false,
       DaTe: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10), 
-      tab:"",
+      tab:"k7",
       // radios:[],
       rds:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       radios:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -616,8 +1294,16 @@ export default {
       // - - - - 
       show: false,
       tutorials: [],
-      currentTutorial: null,
+      // currentTutorial: null,
       currentIndex: -1,
+      currentTutorial: 
+      {
+        sno:"",
+        name:"",
+        phone:"",
+         
+        
+      },
       
       
       pS:"",
@@ -626,10 +1312,46 @@ export default {
       pP:[],
       pM:"",
       qufd:[],
+      bking_Amt:0,
 
       test_DTA :[0,3,	3,	2,	2,	2,	2,	1,	1,	3,	2,	2,	2,	3,	3,	2,	2,	2,	3,	3,	3,	1,	3,	3,	3,	3,	3,	2,	3],
       test_DTA2:[0,5,	4,	2,	2,	5,	4,	3,	5,	5,	3,	4,	4,	4,	4,	4,	4,	4,	4,	5,	5,	5,	5,	5,	5,	5,	1,	5,	4],
       test_DTA3:[0,4,	3,	1,	2,	3,	4,	4,	4,	4,	3,	4,	4,	4,	3,	5,	3,	4,	4,	4,	4,	4,	4,	4,	4,	4,	3,	4,	4,],
+      regen_idx: ['新店','三峽','北大','鶯歌','樹林','新莊','龜山','八德','板橋','中和','新店'],
+      cmtpipe:['官方帳號','大哥的Line','Fb','IG','Line','小寶的Line'],
+     
+      pd_id:"",
+      pd_amt:"",
+      income:"",
+      
+      mbr:{
+          sno:"",
+          name:"",
+          phone:"",
+          cmtpipe_1:"",
+          cmtpipe_2:"",
+          
+          ads:{
+            regen:"",
+            road:"",
+            no:"",
+            floor:"",
+            meta:"",
+            cmty:"",  
+          }, 
+
+          bking:{
+            mor: [],
+            fmy: [], 
+            timeNeed:"",
+          },
+          pmt:{
+            fquc:"",
+            type:"",
+            noto:"",
+          },
+          memo:"", 
+        },
 
       tmplr:{
           memo:"",
@@ -659,31 +1381,31 @@ export default {
   }, 
   methods: { 
 
-Te(idx){ 
-  if(idx == 1) { this.rds = this.test_DTA;  }
-  else if( idx == 2 ){ this.rds = this.test_DTA2; } 
-  else if( idx == 3 ){ this.rds = this.test_DTA3; } 
-},
+    Te(idx){ 
+      if(idx == 1) { this.rds = this.test_DTA;  }
+      else if( idx == 2 ){ this.rds = this.test_DTA2; } 
+      else if( idx == 3 ){ this.rds = this.test_DTA3; } 
+    },
 
-    
-chkrds(){
- for(let i = 0; i <= this.rds.length; i++){
+        
+    chkrds(){
+    for(let i = 0; i <= this.rds.length; i++){
 
-       if( this.rds[i] == "null" ){
-          this.rds[i] = 0 ; 
-        } 
-        else if( this.rds[i] == 'null' ){
-          this.rds[i] = 0 ; 
-        } 
-        else if( this.rds[i] == '' ){
-          this.rds[i] = 0 ; 
-        }  
-        else if( this.rds[i] == 5){
-          this.rds[i] = 55 ; 
-        }    
-      }
+          if( this.rds[i] == "null" ){
+              this.rds[i] = 0 ; 
+            } 
+            else if( this.rds[i] == 'null' ){
+              this.rds[i] = 0 ; 
+            } 
+            else if( this.rds[i] == '' ){
+              this.rds[i] = 0 ; 
+            }  
+            else if( this.rds[i] == 5){
+              this.rds[i] = 55 ; 
+            }    
+          }
 
-},
+    },
 
     savePtst(idx){  
 
@@ -727,6 +1449,7 @@ chkrds(){
           .catch(e => { console.log(e); });  
     },
 
+
     savePdta() {
  
       this.qufd[0]=((((((6-this.radios[3])+(6-this.radios[4])+this.radios[10]+this.radios[15]+this.radios[16]+this.radios[17]+this.radios[18])/7)*4)-4)*(100/16)); 
@@ -752,20 +1475,125 @@ chkrds(){
         }); 
     },
 
-    saveCMS() {
- 
-      
-      var data = { 
+    updateODer() {
+          const data = { 
 
-        name        : this.pI,
-        // patient_ID  : this.tmplr.patient_ID,
-        // prePare     : this.tmplr.prePare, 
-        // quiz_1_fdbk : this.qufd,  
+            pd_id : this.currentTutorial.pd_id,
+            pd_amt : this.currentTutorial.pd_amt,
+            income : this.currentTutorial.income, 
+          };
+
+          odDataService.update(this.currentTutorial.key, data)
+            .then(() => {
+              this.msg = "更新資料,上傳成功!";
+            })
+            .catch((e) => {
+              console.log(e);
+            });
+        },
+
+    updateCMS() {
+      const data = { 
+
+        sno  : this.currentTutorial.sno,
+        name : this.currentTutorial.name,
+        phone : this.currentTutorial.phone,
+        cmtpipe_1 : this.currentTutorial.cmtpipe_1 ,
+        cmtpipe_2: this.currentTutorial.cmtpipe_2,
+        regen: this.currentTutorial.regen,
+
+        road: this.currentTutorial.road,
+        no : this.currentTutorial.no ,
+        floor : this.currentTutorial.floor ,
+        meta : this.currentTutorial.meta ,
+        cmty : this.currentTutorial.cmty ,
+
+        mor : this.currentTutorial.mor ,
+        fmy : this.currentTutorial.fmy ,
+        timeNeed : this.currentTutorial.timeNeed ,
+
+        fquc : this.currentTutorial.fquc ,
+        type : this.currentTutorial.type ,
+        noto : this.currentTutorial.noto ,
+
+        memo: this.currentTutorial.memo, 
+      };
+
+      SeatDataService.update(this.currentTutorial.key, data)
+        .then(() => {
+          this.msg = "更新資料,上傳成功!";
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
+    deleteCMS() {
+      SeatDataService.delete(this.currentTutorial.key)
+        .then(() => {
+          this.$emit("refreshList");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
+    deleteODer() {
+      odDataService.delete(this.currentTutorial.key)
+        .then(() => {
+          this.$emit("refreshList");
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    },
+
+    saveODer() {  
+      var data = {  
+        pd_id : this.pd_id,
+        pd_amt : this.pd_amt,
+        income : this.income, 
+      };
+
+      odDataService.create(data)
+        .then(() => {
+          this.msg= "name,登記成功";
+          this.submitted = true;
+        })
+        .catch(e => {
+          console.log(e);
+        }); 
+    },
+
+    saveCMS() {  
+      var data = {  
+        sno : this.mbr.sno,
+        name : this.mbr.name,
+        phone : this.mbr.phone,
+        cmtpipe_1 : this.mbr.cmtpipe_1 ,
+        cmtpipe_2: this.mbr.cmtpipe_2,
+        regen: this.mbr.ads.regen,
+
+        road: this.mbr.ads.road,
+        no : this.mbr.ads.no ,
+        floor : this.mbr.ads.floor ,
+        meta : this.mbr.ads.meta ,
+        cmty : this.mbr.ads.cmty ,
+
+        mor : this.mbr.bking.mor ,
+        fmy : this.mbr.bking.fmy ,
+        timeNeed : this.mbr.bking.timeNeed ,
+
+        fquc : this.mbr.pmt.fquc ,
+        type : this.mbr.pmt.type ,
+        noto : this.mbr.pmt.noto ,
+
+        memo: this.mbr.memo,  
       };
 
       SeatDataService.create(data)
         .then(() => {
-          this.msg= "name，登記成功";
+          this.msg= "name,登記成功";
           this.submitted = true;
         })
         .catch(e => {
@@ -773,9 +1601,7 @@ chkrds(){
         }); 
     },
     
-    cntDat_qu1(){
-
-         
+    cntDat_qu1(){ 
     },
 
     saveFirstLogin(){
@@ -788,16 +1614,11 @@ chkrds(){
 
         this.tab='k3'
         
-    },
-
-
-    
+    },  
    
     removeCookie() {
       Cookies.remove('login')
-    },
-
-     
+    },  
     onDataChange(items) {
        
       let _tutorials = [];  
@@ -825,8 +1646,7 @@ chkrds(){
             slted: data.slted,
             statu: data.statu
         });
-      });
-
+      }); 
       this.tutorials = _tutorials; 
     },
 
@@ -846,6 +1666,7 @@ chkrds(){
     },
 
     setActiveTutorial(tutorial, index) {
+      this.msg= "";
       this.currentTutorial = tutorial;
       this.currentIndex = index;
     },
@@ -864,6 +1685,41 @@ chkrds(){
         this.ex8[sno_idx].ans
     },
 
+    cms_onDataChange(items) {
+       
+      let _tutorials = [];  
+      items.forEach((item) => {
+        let key = item.key;
+        let data = item.val();
+        _tutorials.push({
+          key: key,  
+          name: data.name,
+          sno : data.sno ,
+
+          // sno : data.sno ,
+          // name : data.name ,
+          phone : data.phone ,
+          cmtpipe_1 : data.cmtpipe_1 ,
+          cmtpipe_2: data.cmtpipe_2,
+          regen: data.regen,
+          road: data.road,
+          no : data.no ,
+          floor : data.floor ,
+          meta : data.meta ,
+          cmty : data.cmty ,
+          mor : data.mor ,
+          fmy : data.fmy ,
+          timeNeed : data.timeNeed ,
+          fquc : data.fquc ,
+          type : data.type ,
+          noto : data.noto ,
+          memo: data.memo,
+           
+        });
+      });  
+      this.tutorials=  _tutorials;
+    },
+
 
     
   },
@@ -874,11 +1730,13 @@ chkrds(){
   mounted() {
     // console.log(_tutorials.title);  
 
-     SeatDataService.getAll().on("value", this.onDataChange);  
+    //  SeatDataService.getAll().on("value", this.onDataChange);  
+     SeatDataService.getAll().on("value", this.cms_onDataChange); 
+     
      this.mdf();
   },
   beforeDestroy() {
-     SeatDataService.getAll().off("value", this.onDataChange);
+     SeatDataService.getAll().off("value", this.cms_onDataChange);
   }, 
 
     

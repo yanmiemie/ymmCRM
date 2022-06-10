@@ -11,6 +11,10 @@ class TutorialDataService {
     return db.push(od);
   }
 
+  setuuID(id,word) {
+    return firebase.ref("/pmts/"+id).set(word);
+  }
+
   update(key, value) {
     return db.child(key).update(value);
   }

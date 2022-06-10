@@ -32,6 +32,9 @@ Vue.config.productionTip = false
 // import Cookies from 'js-cookie';
 // Vue.use(Cookies); 
 
+import dayjs from 'dayjs';
+Vue.prototype.dayjs = dayjs;
+
 
 
 new Vue({

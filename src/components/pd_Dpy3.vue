@@ -164,92 +164,59 @@
         <v-tab-item key='k10' value='k10'>  
             
 
-            <div class = "flex">  
-              <div class ="w-2/3 ">  
-                 <div 
+            <div class = "w-full"> 
+              <div 
                     v-for="(tutorial, index) in tutorials"  
                     :key="index"
-                    class="grid grid-cols-4 gap-1" 
+                    class="grid grid-cols-6 gap-1" 
                  >
                  
-                  <div class="col-span-1 ...">
-                     <v-chip class="text-white text-xs my-1 mr-5" color="green"  >
-                      {{ tutorial.sno }} -{{ tutorial.ser_idx }}  |  {{ tutorial.name }} - {{ tutorial.ser_mdf }} : {{ tutorial.price }} $
-                      </v-chip>
-                  </div>
-
-                   <div class="col-span-1 ...">
-                     <v-btn @click="Mdf_BK(index)" > 
-                      確認  (+1)
-                      </v-btn>
-                  </div>
-
-                  <div class="col-span-1 flex-row">
-
-                    <!-- <v-btn @click="Mdf_BK(index,-1)" > (-1)  </v-btn> -->
-
-
-<!-- @click="get_Price(tutorial.price,index)" -->
-                     <v-text-field class="" 
-                                  
-                                  @change="get_Price(tutorial.price,index)" 
-                                  type="number" v-model="BKing[index]" 
-                                  outlined dense 
-                                  
-                                  v-bind:value='value'
-                                  >
-
-                    </v-text-field>
-
-<!-- 
-                    <v-text-field>
-
+                  <div class="col-span-4 "> 
+                     <span class="text-white text-xs mt-12 mr-3 bg-green-700 py-1 px-2 rounded-lg"  >
                       
-                    
-                      <v-icon
-                        slot="append"
-                        color="red"
-                      >
-                        mdi-plus
-                      </v-icon>
-                      <v-icon
-                        slot="prepend"
-                        color="green"
-                      >
-                        mdi-minus
-                      </v-icon> -->
+                      {{ tutorial.name }} - {{ tutorial.ser_mdf }} 
+                      </span>
 
-                      <!-- <v-btn @click="get_Price(tutorial.price,index)" > 
-                    確認  
-                    </v-btn> --> 
-                    
-                    <!-- <v-btn @click="get_Price(tutorial.price,index)" > 
-                    確認  
-                    </v-btn> -->
-
-                  </div>
-
+                      <span class="pt-2 text-xs font-black my-8">
+                        {{ tutorial.price }} $ 
+                        </span>
+                  </div>  
                   
+                  <div class="col-span-1">  
 
-                  <div class="col-span-1 ...">
-                     <v-text-field class="w-1/3" v-model="Price[index]" value="" >  {{ BKing[index] * tutorial.price }}
-                     </v-text-field>
-                  </div>
+                       <input type="number"   min="0" v-model="BKing[index]"  
+                              class="focus:ring-red-500 focus:border-red-500  
+                                sm:text-sm border-red-300 rounded-md" 
+                              placeholder="0.00"></input>
+                  </div>  
+                  <div class="col-span-1 bg-green-100 rounded-lg pl-2 ">
+                       {{ BKing[index] * tutorial.price }} 元
+                   </div> 
+                </div> 
 
-                </div>
+                <br>
+                <hr>
 
-                    
-  
+                <div 
+                    v-for="(tutorial, index) in tutorials"  
+                    :key="index"
+                    class="grid grid-cols-6 gap-1" 
+                 ></div>
 
+                <!-- <div class="col-span-1 bg-red-200 rounded-lg ">
+                       {{ BKing[index] * tutorial.price }} 元
+                   </div>  -->
 
-              </div>
-              <div class = "w-1/3">
+              <!-- <div class ="w-3/3 ">  
+                  
+              </div> -->
+              <!-- <div class = "w-1/3">
               {{ Price }} || {{ BKing }}
 
-            </div>
+            </div> -->
 
             </div>
-            <template>
+            <!-- <template>
             <v-data-table
               :headers="pdLst_Mdf2CNT"
               :items="tutorials"
@@ -285,7 +252,7 @@
               </template>
               
             </v-data-table>
-          </template>  
+          </template>   -->
         </v-tab-item> 
 
         <v-tab-item key='k11' value='k11'>
@@ -1047,6 +1014,8 @@ export default {
     return { 
       searchs:'', 
       who:'', 
+
+      whee:3, 
       // = = = = == = 
       BKing:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       Price:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -1324,9 +1293,11 @@ export default {
     } ,
      
   methods: {
-    Mdf_BK(idx){ 
-      this.BKing[idx] = parseInt(this.BKing[idx])+ 1 ;
-      alert("idx = " + idx)
+    Mdf_BK(){  
+      for( var c =0 ; c <= this.tutorials.length ; c++)
+      {
+        this.BKing[c] = parseInt(this.BKing[c])*parseInt(this.tutorials[c].price) ; 
+      } 
     },
 
     get_Price(price,idx){ 

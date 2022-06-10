@@ -183,14 +183,16 @@
                   </div>  
                   
                   <div class="col-span-1">  
-
                        <input type="number"   min="0" v-model="BKing[index]"  
                               class="focus:ring-red-500 focus:border-red-500  
                                 sm:text-sm border-red-300 rounded-md" 
-                              placeholder="0.00"></input>
+                              placeholder="0.00">
+                       </input> 
                   </div>  
-                  <div class="col-span-1 bg-green-100 rounded-lg pl-2 ">
-                       {{ BKing[index] * tutorial.price }} 元
+
+                  <div class="col-span-1 text-xs font-base text-green-900 
+                              bg-green-50 rounded-lg pl-2 ">
+                       {{ BKing[index] * tutorial.price }} 
                    </div> 
                 </div> 
 

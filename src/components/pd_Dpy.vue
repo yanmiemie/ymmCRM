@@ -30,7 +30,7 @@
             </v-tab>
 
             <v-tab key='k12' href='#k12' v-if="!hide"  >    
-              新增.訂單 
+              新增.訂單 12
             </v-tab>
 
             <v-tab key='k11' href='#k11' v-if="!hide"  >    
@@ -381,9 +381,98 @@
                 </div>
             </div>  
           </div>    
+        </v-tab-item>  
+
+        <v-tab-item key='k7' value='k7'> 
+          <div class="grid grid-cols-6 gap-1 mt-10"> 
+            <div class="col-span-5">
+
+              <div class="col-span-5 grid grid-cols-6">  
+                      {{ msg }} 
+              </div> 
+
+              <div class="col-span-6 my-10 grid grid-cols-6 gap-1">
+                <div class="col-span-6  ">
+              <span class="pt-30 text-xs font-base my-3" > 
+                修改
+              </span> 
+            </div> 
+
+            <div class="col-span-1  ">
+              <v-text-field 
+              type="number" 
+                dense v-model="currentTutorial.sno"   
+                class=" text-xs  px-1" label="產品序號" >
+              </v-text-field>  
+            </div>
+
+              <div class="col-span-1  ">
+              <v-text-field 
+              type="number" 
+                dense v-model="currentTutorial.ser_idx"   
+                class=" text-xs  px-1" label="系列編號" >
+              </v-text-field>  
+            </div> 
+
+            <div class="col-span-1  ">
+              <v-text-field 
+                dense v-model="currentTutorial.name"   
+                class=" text-xs  px-1" label="名稱" >
+              </v-text-field>  
+            </div>  
+
+            <div class="col-span-1  ">
+              <v-text-field 
+                dense v-model="currentTutorial.ser_mdf"   
+                class=" text-xs  px-1" label="系列名稱" >
+              </v-text-field>  
+            </div>
+
+            <div class="col-span-1  ">
+              <v-text-field 
+                type="number" 
+                dense v-model="currentTutorial.price"  
+                class=" text-xs  px-1" label="售價" >
+              </v-text-field>  
+            </div> 
+ 
+                 <div class="col-span-1  ">
+                  <v-btn @click="savePd_cur" > 新增產品 </v-btn>   
+                </div> 
+
+                <div class="col-span-1  ">
+                  <v-btn @click="updtaPd" > 更新產品 </v-btn>   
+                </div>  
+                
+                  </div>
+                   
+                  </div>
+                  <div class="col-span-10"></div> 
+  
+            <div class="col-span-5 my-10 ">
+              <v-list-item-group 
+                color="primary" 
+                > 
+                <v-list-item
+                  v-for="(tutorial, index) in tutorials"  
+                  :key="index"  
+                  @click="setActiveTutorial(tutorial, index)"
+                  
+                > 
+                <v-chip class="text-white text-xs mr-5" color="green"  >
+                 {{ tutorial.sno }} -{{ tutorial.ser_idx }}  |  {{ tutorial.name }} - {{ tutorial.ser_mdf }} : {{ tutorial.price }} $
+                </v-chip> 
+                <v-btn  @click="deletePd(tutorial.key)"  >刪除 {{ tutorial.key }}</v-btn></v-btn>
+
+                <span class="text-xs text-green-700 font-semibold tracking-wide">{{ tutorial.question }}</span>
+    
+                </v-list-item>
+              </v-list-item-group>  
+            </div>  
+          </div>    
         </v-tab-item> 
 
-        <v-tab-item key='k12' value='k12'> 
+         <v-tab-item key='k12' value='k12'> 
           <div class="grid grid-cols-6 mt-12 "> 
             <div class="col-span-1">
               
@@ -520,95 +609,6 @@
               </div>
             </div>
          </div>
-        </v-tab-item> 
-
-        <v-tab-item key='k7' value='k7'> 
-          <div class="grid grid-cols-6 gap-1 mt-10"> 
-            <div class="col-span-5">
-
-              <div class="col-span-5 grid grid-cols-6">  
-                      {{ msg }} 
-              </div> 
-
-              <div class="col-span-6 my-10 grid grid-cols-6 gap-1">
-                <div class="col-span-6  ">
-              <span class="pt-30 text-xs font-base my-3" > 
-                修改
-              </span> 
-            </div> 
-
-            <div class="col-span-1  ">
-              <v-text-field 
-              type="number" 
-                dense v-model="currentTutorial.sno"   
-                class=" text-xs  px-1" label="產品序號" >
-              </v-text-field>  
-            </div>
-
-              <div class="col-span-1  ">
-              <v-text-field 
-              type="number" 
-                dense v-model="currentTutorial.ser_idx"   
-                class=" text-xs  px-1" label="系列編號" >
-              </v-text-field>  
-            </div> 
-
-            <div class="col-span-1  ">
-              <v-text-field 
-                dense v-model="currentTutorial.name"   
-                class=" text-xs  px-1" label="名稱" >
-              </v-text-field>  
-            </div>  
-
-            <div class="col-span-1  ">
-              <v-text-field 
-                dense v-model="currentTutorial.ser_mdf"   
-                class=" text-xs  px-1" label="系列名稱" >
-              </v-text-field>  
-            </div>
-
-            <div class="col-span-1  ">
-              <v-text-field 
-                type="number" 
-                dense v-model="currentTutorial.price"  
-                class=" text-xs  px-1" label="售價" >
-              </v-text-field>  
-            </div> 
- 
-                 <div class="col-span-1  ">
-                  <v-btn @click="savePd_cur" > 新增產品 </v-btn>   
-                </div> 
-
-                <div class="col-span-1  ">
-                  <v-btn @click="updtaPd" > 更新產品 </v-btn>   
-                </div>  
-                
-                  </div>
-                   
-                  </div>
-                  <div class="col-span-10"></div> 
-  
-            <div class="col-span-5 my-10 ">
-              <v-list-item-group 
-                color="primary" 
-                > 
-                <v-list-item
-                  v-for="(tutorial, index) in tutorials"  
-                  :key="index"  
-                  @click="setActiveTutorial(tutorial, index)"
-                  
-                > 
-                <v-chip class="text-white text-xs mr-5" color="green"  >
-                 {{ tutorial.sno }} -{{ tutorial.ser_idx }}  |  {{ tutorial.name }} - {{ tutorial.ser_mdf }} : {{ tutorial.price }} $
-                </v-chip> 
-                <v-btn  @click="deletePd(tutorial.key)"  >刪除 {{ tutorial.key }}</v-btn></v-btn>
-
-                <span class="text-xs text-green-700 font-semibold tracking-wide">{{ tutorial.question }}</span>
-    
-                </v-list-item>
-              </v-list-item-group>  
-            </div>  
-          </div>    
         </v-tab-item> 
  
       </v-tabs-items>

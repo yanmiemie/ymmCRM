@@ -26,7 +26,7 @@
             </v-tab> 
             
             <v-tab key='k7' href='#k7' v-if="!hide"  >    
-              修改產品 資料 
+              修改產品 資料 22
             </v-tab>
 
             <v-tab key='k12' href='#k12' v-if="!hide"  >    
@@ -47,6 +47,10 @@
 
             <v-tab key='k10' href='#k10' v-if="!hide"  >    
               計算機
+            </v-tab>
+
+            <v-tab key='k13' href='#k13' v-if="!hide"  >    
+              選一天
             </v-tab>
 
             <v-tab key='k8' href='#k8' v-if="!hide"  >    
@@ -764,6 +768,32 @@
           </div>    
         </v-tab-item> 
 
+        <v-tab-item key='k13' value='k13'>
+          <div class="flex">
+            <div class="w-1/3">
+              <v-date-picker
+                v-model="picker"
+                color="green lighten-1"
+                multiple
+              ></v-date-picker>
+            </div>
+
+            <div class="w-1/3 ">
+               {{ picker }}
+            </div>
+
+             <div class="w-1/3">
+               {{ find_Days(picker) }}
+            </div>
+
+
+            
+          
+          </div>
+
+          {{ }}
+        </v-tab-item>
+
       
         <v-tab-item key='k12' value='k12'> 
           <div class="grid grid-cols-6 mt-12 "> 
@@ -1018,6 +1048,7 @@ export default {
       who:'', 
 
       whee:3, 
+      picker:"",
       // = = = = == = 
       BKing:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       Price:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -1044,7 +1075,8 @@ export default {
       D_itms:["2022-05-22","2022-05-25","2022-05-27","2022-05-31"],
       pd_content_idx1:['家庭號配送','快閃店配送','晨間配送','原味1','原味2','綜合輪送（含原味）','調味輪送'],
       pd_content_idx2:['見紅就休','每天送','配合幼稚園','到外縣市上班','血緣親戚','親友團','家庭號-老顧客','家庭號-新顧客'],
-      pd_content_idx3:['原味','甜味','紅糖','巧克力','草莓','果汁','綜合輪送'],
+      
+      date_idx:['(日)','(一)','(二)','(三)','(四)','(五)','(六)'],
 
       // - - - - - - - - - - - - - - - - - - - -
       CMS:[],
@@ -1751,7 +1783,24 @@ export default {
     }, 
 
     find_Days(hint){
-        return dayjs().format()
+
+
+        var ary =[];
+        var ary2 =[];
+        var str ="";
+
+        for(let n=1 ; n<= hint.length-1 ; n++)
+        {
+          // let d = dayjs(hint[n]).format('MM/DD')+this.date_idx[dayjs(hint[n]).day()] ;
+          // ary.push(hint[n]);
+
+          ary2.push(dayjs(hint[n]).format('MM/DD') +this.date_idx[dayjs(hint[n]).day()])+" ";
+          str = str + dayjs(hint[n]).format('MM/DD') +this.date_idx[dayjs(hint[n]).day()].toString() + "  ,";
+
+        }
+
+        return str 
+        // return hint.length + dayjs(hint).format('MM/DD')+this.date_idx[dayjs(hint).day()] // 得到星期幾
     }, 
 
 

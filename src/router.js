@@ -23,17 +23,12 @@ export default new Router({
     },
     {
       path: "/",
-      name: "pd_Dpy",
+      name: "pd_Dpy3",
       component: () => import("./components/pd_Dpy3")
-    },
-    {
-      path: "/pd_Dpy",
-      name: "pd_Dpy",
-      component: () => import("./components/pd_Dpy")
-    },
+    }, 
     {
       path: "/pd_Dpy3",
-      name: "pd_Dpy",
+      name: "pd_Dpy3",
       component: () => import("./components/pd_Dpy3")
     },
 

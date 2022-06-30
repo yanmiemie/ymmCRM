@@ -783,6 +783,7 @@
             </div>
 
              <div class="w-1/3">
+              <v-btn type="success" round  @click="copy(find_Days(picker))" >複製日期</v-btn>
                {{ find_Days(picker) }}
             </div>
 
@@ -1141,7 +1142,7 @@ export default {
 
       menu2:false,
       DaTe: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10), 
-      tab:"k10",
+      tab:"k13",
       // radios:[],
       rds:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       radios:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
@@ -1327,6 +1328,10 @@ export default {
     } ,
      
   methods: {
+    async copy(s) {
+      await navigator.clipboard.writeText(s);
+      alert(s);
+    },
     Mdf_BK(){  
       for( var c =0 ; c <= this.tutorials.length ; c++)
       {
